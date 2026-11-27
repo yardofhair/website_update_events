@@ -1,5 +1,9 @@
 <!-- Paste into a Squarespace Code Block (uncheck "Display Source").
-     Only edit EVENTS_URL below. -->
+     Two ways to use this file:
+     1. Baked in (default): run build_block.py, which fills in the events between
+        the DATA_START/DATA_END markers and writes events-block-ready.html.
+     2. Hosted: set EVENTS_URL below and paste this template as is. It is used
+        only when no events are baked in. -->
 <div id="ldrl-events" aria-live="polite">Loading upcoming events…</div>
 
 <style>
@@ -24,6 +28,9 @@
 (function () {
   // >>> Change this to wherever you host events.json (must be a public https URL) <<<
   var EVENTS_URL = "https://YOUR-USERNAME.github.io/YOUR-REPO/events.json";
+
+  // build_block.py replaces null with the events you picked. Leave the markers in place.
+  var EMBEDDED = /*DATA_START*/null/*DATA_END*/;
 
   var root = document.getElementById("ldrl-events");
   var MONTHS = ["January","February","March","April","May","June","July",
@@ -104,6 +111,8 @@
       root.appendChild(row);
     });
   }
+
+  if (Array.isArray(EMBEDDED)) { render(EMBEDDED); return; }
 
   fetch(EVENTS_URL, { cache: "no-cache" })
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
