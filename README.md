@@ -37,7 +37,8 @@ Then:
 1. Open `events-block-ready.html` and copy everything in it.
 2. In Squarespace, edit the page, add a **Code Block**, uncheck **Display Source**, and paste.
 3. Save and check the live page. The editor preview may not run scripts.
-4. Upload the updated `events.json` and `events-block-ready.html` to this repository to keep a history.
+
+`events.json` and `events-block-ready.html` are generated, so they are gitignored and stay on your computer. Back up `events.json` yourself if you want to keep your YouTube links and show-from times.
 
 ## YouTube links
 
