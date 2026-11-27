@@ -1,9 +1,9 @@
 <!-- Paste into a Squarespace Code Block (uncheck "Display Source").
      Two ways to use this file:
-     1. Baked in (default): run build_block.py, which fills in the events between
-        the DATA_START/DATA_END markers and writes events-block-ready.html.
-     2. Hosted: set EVENTS_URL below and paste this template as is. It is used
-        only when no events are baked in. -->
+     1. Hosted (paste once): paste this template as is. It loads the events that
+        publish.py put online at EVENTS_URL, so the page updates without re-pasting.
+     2. Baked in: build_block.py fills in the events between the DATA_START/DATA_END
+        markers and writes events-block-ready.html, which you paste each time. -->
 <div id="ldrl-events" aria-live="polite">Loading upcoming events…</div>
 
 <style>
@@ -26,8 +26,8 @@
 
 <script>
 (function () {
-  // >>> Change this to wherever you host events.json (must be a public https URL) <<<
-  var EVENTS_URL = "https://YOUR-USERNAME.github.io/YOUR-REPO/events.json";
+  // Where publish.py puts the events online (GitHub Pages, gh-pages branch).
+  var EVENTS_URL = "https://yardofhair.github.io/website_update_events/events.json";
 
   // build_block.py replaces null with the events you picked. Leave the markers in place.
   var EMBEDDED = /*DATA_START*/null/*DATA_END*/;
