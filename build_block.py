@@ -18,6 +18,7 @@ HERE = Path(__file__).resolve().parent
 TEMPLATE = HERE / "squarespace-events-block.html"
 EVENTS = Path("events.json")
 OUTPUT = Path("events-block-ready.html")
+PUBLISHED = Path("events-published.json")  # what publish.py puts online
 
 
 def ask(prompt):
@@ -120,6 +121,13 @@ def main():
     # Save video info back so fetch_events.py keeps it on the next run.
     EVENTS.write_text(json.dumps(data, indent=2, ensure_ascii=False))
 
+    # The selection, for the hosted page. publish.py uploads this file.
+    PUBLISHED.write_text(json.dumps(
+        {"updated": datetime.now().astimezone().isoformat(timespec="seconds"),
+         "events": selected},
+        indent=2, ensure_ascii=False,
+    ))
+
     payload = json.dumps(selected, ensure_ascii=False).replace("</", "<\\/")
     template = TEMPLATE.read_text()
     new_html, n = re.subn(
@@ -131,8 +139,8 @@ def main():
     if n != 1:
         sys.exit("Couldn't find the DATA_START/DATA_END markers in the template.")
     OUTPUT.write_text(new_html)
-    print(f"\nWrote {OUTPUT} with {len(selected)} event(s).")
-    print("Paste its contents into your Squarespace Code Block, and commit it to GitHub.")
+    print(f"\nWrote {PUBLISHED} and {OUTPUT} with {len(selected)} event(s).")
+    print("Run publish.py to update the live page (or paste the .html file by hand).")
 
 
 if __name__ == "__main__":
